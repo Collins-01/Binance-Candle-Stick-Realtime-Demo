@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:binance_demo/core/data/remote/binance/binance_interface.dart';
+import 'package:binance_demo/core/models/models.dart';
 import 'package:binance_demo/core/network_config/network_client.dart';
 import 'package:binance_demo/utils/utils.dart';
 import 'package:candlesticks/candlesticks.dart';
@@ -12,7 +13,7 @@ class BinanceServiceImpl implements BinanceService {
   BinanceServiceImpl(this._networkClient);
   final _logger = appLogger(BinanceServiceImpl);
   @override
-  Future<void> establishSocketConnection(
+  Future<WebSocketChannel> establishSocketConnection(
       {required String symbol, required String interval}) async {
     final channel = WebSocketChannel.connect(
       Uri.parse('wss://stream.binance.com:9443/ws'),
@@ -26,7 +27,7 @@ class BinanceServiceImpl implements BinanceService {
         },
       ),
     );
-    // return channel;
+    return channel;
   }
 
   @override
@@ -35,16 +36,18 @@ class BinanceServiceImpl implements BinanceService {
     final String uri =
         "https://api.binance.com/api/v3/klines?symbol=$symbol&interval=$interval${endTime != null ? "&endTime=$endTime" : ""}";
     final data = await _networkClient.get(uri) as List;
-    _logger.d("Candles... $data");
+    // _logger.d("Candles... $data");
     return data.map((e) => Candle.fromJson(e)).toList().reversed.toList();
   }
 
   @override
-  Future<List<String>> getSymbols() async {
+  Future<List<SymbolResponseModel>> getSymbols() async {
     const uri = "https://api.binance.com/api/v3/ticker/price";
     final res = await _networkClient.get(uri) as List;
-    _logger.d("Symbols Response:: $res");
-    return res.map((e) => e["symbol"] as String).toList();
+    // _logger.d("Symbols Response:: $res");
+    final arr = res.map((e) => SymbolResponseModel.fromMap(e)).toList();
+
+    return arr;
   }
 }
 
