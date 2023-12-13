@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:binance_demo/core/data/remote/binance/binance_interface.dart';
 import 'package:binance_demo/core/network_config/network_client.dart';
 import 'package:binance_demo/utils/utils.dart';
 import 'package:candlesticks/candlesticks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class BinanceServiceImpl implements BinanceService {
   final NetworkClient _networkClient;
@@ -10,9 +13,20 @@ class BinanceServiceImpl implements BinanceService {
   final _logger = appLogger(BinanceServiceImpl);
   @override
   Future<void> establishSocketConnection(
-      {required String symbol, required String interval}) {
-    // TODO: implement establishSocketConnection
-    throw UnimplementedError();
+      {required String symbol, required String interval}) async {
+    final channel = WebSocketChannel.connect(
+      Uri.parse('wss://stream.binance.com:9443/ws'),
+    );
+    channel.sink.add(
+      json.encode(
+        {
+          "method": "SUBSCRIBE",
+          "params": ["$symbol@kline_$interval"],
+          "id": 1
+        },
+      ),
+    );
+    // return channel;
   }
 
   @override
