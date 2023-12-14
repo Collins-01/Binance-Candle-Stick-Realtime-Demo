@@ -18,8 +18,6 @@ class CandleSticksSection extends ConsumerStatefulWidget {
 }
 
 class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
-  bool _isTradingView = true;
-
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(homeViewModelProvider);
@@ -30,6 +28,20 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
         TimeFrameSection(
           onSelected: (value) {
             vm.setInterval(value);
+            if (vm.currentSymbol != null) {
+              ref
+                  .read(homeViewModelProvider)
+                  .getCandles(vm.currentSymbol!, vm.currentInterval)
+                  .then((value) {
+                if (vm.candleTicker == null) {
+                  vm.initializeWebSocket(
+                    interval: vm.currentInterval,
+                    symbol: vm.currentSymbol!.symbol,
+                  );
+                }
+              });
+            }
+            //Re initialize the socket
           },
         ),
         const Gap(15),
@@ -37,90 +49,6 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
           color: AppColors.blackTint.withOpacity(.1),
           thickness: 1,
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(
-        //     horizontal: 16,
-        //     vertical: 9,
-        //   ),
-        //   child: Row(
-        //     children: [
-        //       InkWell(
-        //         onTap: () {
-        //           if (!_isTradingView) {
-        //             setState(() {
-        //               _isTradingView = true;
-        //             });
-        //           }
-        //         },
-        //         child: AnimatedContainer(
-        //           duration: const Duration(milliseconds: 400),
-        //           margin: const EdgeInsets.symmetric(
-        //             horizontal: 3,
-        //           ),
-        //           padding: const EdgeInsets.symmetric(
-        //             vertical: 6,
-        //             horizontal: 13,
-        //           ),
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(100),
-        //             color: _isTradingView
-        //                 ? context.isDarkMode
-        //                     ? const Color(0xff555C63)
-        //                     : const Color(0xffCFD3D8)
-        //                 : Colors.transparent,
-        //           ),
-        //           child: Center(
-        //             child: AppText.body1(
-        //               'Trading view',
-        //               color: context.isDarkMode
-        //                   ? AppColors.white
-        //                   : AppColors.blackTint2,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       InkWell(
-        //         onTap: () {
-        //           if (_isTradingView) {
-        //             setState(() {
-        //               _isTradingView = false;
-        //             });
-        //           }
-        //         },
-        //         child: AnimatedContainer(
-        //           duration: const Duration(milliseconds: 400),
-        //           margin: const EdgeInsets.symmetric(
-        //             horizontal: 3,
-        //           ),
-        //           padding: const EdgeInsets.symmetric(
-        //             vertical: 6,
-        //             horizontal: 13,
-        //           ),
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(100),
-        //             color: !_isTradingView
-        //                 ? context.isDarkMode
-        //                     ? const Color(0xff555C63)
-        //                     : const Color(0xffCFD3D8)
-        //                 : Colors.transparent,
-        //           ),
-        //           child: Center(
-        //             child: AppText.body1(
-        //               'Depth',
-        //               color: context.isDarkMode
-        //                   ? AppColors.white
-        //                   : AppColors.blackTint2,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       const Gap(5),
-        //       SvgPicture.asset(
-        //         AppAssets.expand,
-        //       )
-        //     ],
-        //   ),
-        // ),
         Divider(
           color: AppColors.blackTint.withOpacity(.1),
           thickness: 1,
@@ -148,7 +76,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: SvgPicture.asset(
-                      AppAssets.arrow_down,
+                      AppAssets.rounded_arrow_down,
                       width: 20,
                       height: 20,
                     ),

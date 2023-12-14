@@ -183,35 +183,35 @@ class OrderBookSection extends ConsumerWidget {
             ),
           ),
           const Gap(19),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     if (vm.orderBooks!.asks!.length >= 2 &&
-          //         vm.orderBooks!.asks![0]!.isNotEmpty) ...[
-          //       AppText.body1(
-          //         '${double.tryParse(vm.orderBooks!.asks![1]![0]!.toString())}',
-          //         color: const Color(0xff25C26E),
-          //         fontSize: 16,
-          //       ),
-          //       const Gap(13),
-          //       Icon(
-          //         Icons.arrow_upward_rounded,
-          //         size: 18,
-          //         color: context.isDarkMode
-          //             ? AppColors.blackTint
-          //             : const Color(0xff25C26E),
-          //       ),
-          //       const Gap(13),
-          //       AppText.body1(
-          //         '${double.tryParse(vm.orderBooks!.bids![1]![0]!.toString())}',
-          //         fontSize: 16,
-          //         color: context.isDarkMode
-          //             ? AppColors.white
-          //             : AppColors.primaryBlack,
-          //       ),
-          //     ]
-          //   ],
-          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (vm.orderBooks!.asks!.length >= 2 &&
+                  vm.orderBooks!.asks![0]!.isNotEmpty) ...[
+                AppText.body1(
+                  '${double.tryParse(vm.orderBooks!.asks![1]![0]!.toString())}',
+                  color: const Color(0xff25C26E),
+                  fontSize: 16,
+                ),
+                const Gap(13),
+                Icon(
+                  Icons.arrow_upward_rounded,
+                  size: 18,
+                  color: context.isDarkMode
+                      ? AppColors.blackTint
+                      : const Color(0xff25C26E),
+                ),
+                const Gap(13),
+                AppText.body1(
+                  '${double.tryParse(vm.orderBooks!.bids![1]![0]!.toString())}',
+                  fontSize: 16,
+                  color: context.isDarkMode
+                      ? AppColors.white
+                      : AppColors.primaryBlack,
+                ),
+              ]
+            ],
+          ),
           const Gap(19),
           Column(
             children: List.generate(

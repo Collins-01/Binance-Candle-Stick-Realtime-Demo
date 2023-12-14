@@ -1,23 +1,20 @@
 import 'package:binance_demo/constants/app_assets.dart';
 import 'package:binance_demo/extensions/context_extension.dart';
+import 'package:binance_demo/presentation/views/home/viewmodels/home_viewmodel.dart';
 import 'package:binance_demo/presentation/widgets/widgets.dart';
 import 'package:binance_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class TimeFrameSection extends StatefulWidget {
-  const TimeFrameSection({
+class TimeFrameSection extends ConsumerWidget {
+  TimeFrameSection({
     required this.onSelected,
     super.key,
   });
 
   final Function(String) onSelected;
 
-  @override
-  State<TimeFrameSection> createState() => _TimeFrameSectionState();
-}
-
-class _TimeFrameSectionState extends State<TimeFrameSection> {
   final List<String> timeframes = [
     '1H',
     '2H',
@@ -26,15 +23,10 @@ class _TimeFrameSectionState extends State<TimeFrameSection> {
     '1W',
     '1M',
   ];
-  late String currentTime;
-  @override
-  void initState() {
-    currentTime = timeframes[0];
-    super.initState();
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final vm = ref.watch(homeViewModelProvider);
     return Padding(
       padding: const EdgeInsets.only(left: 16),
       child: SingleChildScrollView(
@@ -50,10 +42,8 @@ class _TimeFrameSectionState extends State<TimeFrameSection> {
             ...timeframes.map(
               (e) => InkWell(
                 onTap: () {
-                  widget.onSelected.call(e);
-                  setState(() {
-                    currentTime = e;
-                  });
+                  onSelected.call(e);
+                  vm.setInterval(e);
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 400),
@@ -66,7 +56,7 @@ class _TimeFrameSectionState extends State<TimeFrameSection> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: currentTime == e
+                    color: vm.currentInterval == e
                         ? context.isDarkMode
                             ? const Color(0xff555C63)
                             : const Color(0xffCFD3D8)

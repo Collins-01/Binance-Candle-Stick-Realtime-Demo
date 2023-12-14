@@ -5,7 +5,7 @@ class AppAssets {
   static const String _svgPath = "assets/svgs";
   static const String _iconPath = "assets/icons";
   static const String company_logo = "$_svgPath/company_logo.svg";
-  static const String avatar = "$_svgPath/avatar.svg";
+  static const String _imagePath = "assets/images";
 
   // *****************************[ICONS]********************
   static const String internet = "$_iconPath/internet.svg";
@@ -20,4 +20,8 @@ class AppAssets {
   static const String btc_usd = "$_iconPath/btc_usd.svg";
   static const String charts = "$_iconPath/chart.svg";
   static const String expand = "$_iconPath/expand.svg";
+  static const String rounded_arrow_down = "$_iconPath/rounded_arrow_down.svg";
+
+  // ************************************[IMAGES]********************************************
+  static const String avatar = "$_imagePath/avatar.png";
 }

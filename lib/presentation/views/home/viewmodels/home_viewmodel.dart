@@ -116,13 +116,16 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  initializeWebSocket() async {
+  initializeWebSocket({
+    required String symbol,
+    required String interval,
+  }) async {
     _logger.d("Initializing websocket..");
     final binanceRepository = ref.read(binanceRepositoryProvider);
 
     final chn = binanceRepository.establishSocketConnection(
-      interval: _currentInterval.toLowerCase(),
-      symbol: _currentSymbol!.symbol.toLowerCase(),
+      interval: interval.toLowerCase(),
+      symbol: symbol.toLowerCase(),
     );
 
     await for (final String value in chn.stream) {

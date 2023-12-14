@@ -39,7 +39,10 @@ class _HomeViewState extends ConsumerState<HomeView>
               .getCandles(vm.currentSymbol!, vm.currentInterval)
               .then((value) {
             if (vm.candleTicker == null) {
-              vm.initializeWebSocket();
+              vm.initializeWebSocket(
+                interval: vm.currentInterval,
+                symbol: vm.currentSymbol!.symbol,
+              );
             }
           });
         }
@@ -118,7 +121,7 @@ class _HomeViewState extends ConsumerState<HomeView>
             actions: [
               Row(
                 children: [
-                  SvgPicture.asset(AppAssets.avatar),
+                  Image.asset(AppAssets.avatar),
                   Gap.w16,
                   SvgPicture.asset(AppAssets.internet),
                   Gap.w16,
