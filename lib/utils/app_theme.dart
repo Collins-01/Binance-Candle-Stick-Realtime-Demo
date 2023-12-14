@@ -26,7 +26,7 @@ class AppTheme {
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         unselectedLabelColor: AppColors.blackTint2,
-        // labelColor: rockBlack,
+        labelColor: AppColors.rockBlack,
       ),
       textTheme: const TextTheme().apply(
         bodyColor: AppColors.black,
@@ -47,8 +47,8 @@ class AppTheme {
         color: AppColors.white,
       ),
       cardColor: AppColors.black,
-      // shadowColor: cardStroke,
-      // scaffoldBackgroundColor: rockBlack,
+      shadowColor: AppColors.cardStroke,
+      scaffoldBackgroundColor: AppColors.rockBlack,
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.black,
         elevation: 0,
@@ -56,7 +56,7 @@ class AppTheme {
       tabBarTheme: TabBarTheme(
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          // color: rockBlack,
+          color: AppColors.rockBlack,
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         unselectedLabelColor: AppColors.white,

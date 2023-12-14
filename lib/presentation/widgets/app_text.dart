@@ -226,8 +226,7 @@ class AppText extends StatelessWidget {
       overflow: overflow,
       textAlign: centered ? TextAlign.center : textAlign ?? TextAlign.left,
       style: style.copyWith(
-        color: color ?? AppColors.textColor,
-      ),
+          color: color ?? Theme.of(context).textTheme.titleMedium!.color!),
     );
   }
 }

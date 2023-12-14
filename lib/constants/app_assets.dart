@@ -17,4 +17,7 @@ class AppAssets {
   static const String arrow_down = "$_iconPath/arrow_down.svg";
   static const String keyboard_arrow_down =
       "$_iconPath/keyboard_arrow_down.svg";
+  static const String btc_usd = "$_iconPath/btc_usd.svg";
+  static const String charts = "$_iconPath/chart.svg";
+  static const String expand = "$_iconPath/expand.svg";
 }

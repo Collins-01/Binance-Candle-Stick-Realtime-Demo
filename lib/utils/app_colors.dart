@@ -13,4 +13,7 @@ class AppColors {
   static const blackTint2 = Color(0xff737A91);
   static const blackTint3 = Color(0xff373B3F);
   static const divider = Color(0xffEAF0FE);
+  static const primaryBlack = Color(0xff17181B);
+  static const rockBlack = Color.fromRGBO(28, 33, 39, 1);
+  static const cardStroke = Color(0xff262932);
 }
