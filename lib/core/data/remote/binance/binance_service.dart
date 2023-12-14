@@ -13,8 +13,8 @@ class BinanceServiceImpl implements BinanceService {
   BinanceServiceImpl(this._networkClient);
   final _logger = appLogger(BinanceServiceImpl);
   @override
-  Future<WebSocketChannel> establishSocketConnection(
-      {required String symbol, required String interval}) async {
+  WebSocketChannel establishSocketConnection(
+      {required String symbol, required String interval}) {
     final channel = WebSocketChannel.connect(
       Uri.parse('wss://stream.binance.com:9443/ws'),
     );

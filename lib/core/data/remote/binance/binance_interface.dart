@@ -10,7 +10,7 @@ abstract class BinanceInterface {
     int? endTime,
   });
 
-  Future<WebSocketChannel> establishSocketConnection({
+  WebSocketChannel establishSocketConnection({
     required String symbol,
     required String interval,
   });

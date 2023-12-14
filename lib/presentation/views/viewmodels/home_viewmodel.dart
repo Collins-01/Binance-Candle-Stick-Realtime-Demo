@@ -120,38 +120,33 @@ class HomeViewModel extends BaseViewModel {
     _logger.d("Initializing websocket..");
     final binanceRepository = ref.read(binanceRepositoryProvider);
 
-    final channel = await binanceRepository.establishSocketConnection(
+    final chn = binanceRepository.establishSocketConnection(
       interval: _currentInterval.toLowerCase(),
-      symbol: _currentSymbol!.symbol,
+      symbol: _currentSymbol!.symbol.toLowerCase(),
     );
-    channel.stream.listen((event) {
-      _logger.d("Stream Data ===>> $event");
-      _streamController.sink.add(event);
-    });
 
-    // await for (final String value in channel.stream) {
-    //   final map = jsonDecode(value) as Map<String, dynamic>;
-    //   final eventType = map['e'];
+    await for (final String value in chn.stream) {
+      _logger.d("Incoming Data from websocket === $value");
+      final map = jsonDecode(value) as Map<String, dynamic>;
+      final eventType = map['e'];
 
-    //   if (eventType == 'kline') {
-    //     final candleTicker = CandleTickerModel.fromJson(map);
-    //     if (_candles[0].date == candleTicker.candle.date &&
-    //         _candles[0].open == candleTicker.candle.open) {
-    //       _candles[0] = candleTicker.candle;
-    //       notifyListeners();
-    //     } else if (candleTicker.candle.date.difference(candles[0].date) ==
-    //         _candles[0].date.difference(candles[1].date)) {
-    //       _candles.insert(0, candleTicker.candle);
-    //       notifyListeners();
-    //     }
-    //   } else if (eventType == 'depthUpdate') {
-    //     final orderBookInfo = OrderBook.fromMap(map);
-    //     setOrderBook(orderBookInfo);
-    //   }
-    // }
+      if (eventType == 'kline') {
+        final candleTicker = CandleTickerModel.fromJson(map);
+        if (_candles[0].date == candleTicker.candle.date &&
+            _candles[0].open == candleTicker.candle.open) {
+          _candles[0] = candleTicker.candle;
+          notifyListeners();
+        } else if (candleTicker.candle.date.difference(_candles[0].date) ==
+            _candles[0].date.difference(_candles[1].date)) {
+          _candles.insert(0, candleTicker.candle);
+          notifyListeners();
+        }
+      } else if (eventType == 'depthUpdate') {
+        final orderBookInfo = OrderBook.fromMap(map);
+        setOrderBook(orderBookInfo);
+      }
+    }
   }
-
-  listenAndUpdateChartStream() {}
 
   Future<void> loadMoreCandles(StreamValueDTO streamValue) async {
     try {

@@ -9,8 +9,8 @@ class BinanceRepositoryImpl implements BinanceRepository {
   final BinanceService _binanceService;
   BinanceRepositoryImpl(this._binanceService);
   @override
-  Future<WebSocketChannel> establishSocketConnection(
-      {required String symbol, required String interval}) async {
+  WebSocketChannel establishSocketConnection(
+      {required String symbol, required String interval}) {
     return _binanceService.establishSocketConnection(
         symbol: symbol, interval: interval);
   }
