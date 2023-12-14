@@ -1,7 +1,7 @@
 import 'package:binance_demo/constants/constants.dart';
 import 'package:binance_demo/extensions/context_extension.dart';
-import 'package:binance_demo/presentation/views/components/components.dart';
-import 'package:binance_demo/presentation/views/viewmodels/home_viewmodel.dart';
+import 'package:binance_demo/presentation/views/home/components/components.dart';
+import 'package:binance_demo/presentation/views/home/viewmodels/home_viewmodel.dart';
 import 'package:binance_demo/presentation/widgets/widgets.dart';
 import 'package:binance_demo/utils/utils.dart';
 import 'package:flutter/material.dart';

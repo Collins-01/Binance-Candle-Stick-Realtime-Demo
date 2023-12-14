@@ -105,7 +105,7 @@ class HomeViewModel extends BaseViewModel {
             interval: interval.toLowerCase(),
           );
       _candles = result;
-      _logger.d("Candles Response :: ${_candles.length}");
+      _logger.d("Candles Length :: ${_candles.length}");
       changeState(const ViewModelState.idle());
     } on Failure catch (e) {
       changeState(ViewModelState.error(e));

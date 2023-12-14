@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:binance_demo/presentation/views/home_view.dart';
+import 'package:binance_demo/presentation/views/home/home_view.dart';
 import 'package:binance_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
