@@ -32,8 +32,8 @@ class HomeViewModel extends BaseViewModel {
   int _bottomTabIndex = 0;
   int get bottomTabIndex => _bottomTabIndex;
 
-  CandleTickerModel? _candleStick;
-  CandleTickerModel? get candleStick => _candleStick;
+  CandleTickerModel? _candleTicker;
+  CandleTickerModel? get candleTicker => _candleTicker;
   OrderBook? _orderBooks;
   OrderBook? get orderBooks => _orderBooks;
 
@@ -65,8 +65,8 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  setCandleStick(CandleTickerModel candleT) {
-    _candleStick = candleT;
+  setCandleTicker(CandleTickerModel candleT) {
+    _candleTicker = candleT;
     notifyListeners();
   }
 
@@ -84,7 +84,7 @@ class HomeViewModel extends BaseViewModel {
       _symbols = result;
       _logger.d("Symbols Length ===> ${_symbols.length}");
       if (_symbols.isNotEmpty) {
-        _currentSymbol = _symbols[0];
+        _currentSymbol = _symbols[11];
       }
       notifyListeners();
     } on Failure catch (e) {
@@ -126,12 +126,15 @@ class HomeViewModel extends BaseViewModel {
     );
 
     await for (final String value in chn.stream) {
-      _logger.d("Incoming Data from websocket === $value");
+      // _logger.d("Incoming Data from websocket === $value");
       final map = jsonDecode(value) as Map<String, dynamic>;
       final eventType = map['e'];
 
+      // * CHECK IF IT IS KLINE
       if (eventType == 'kline') {
         final candleTicker = CandleTickerModel.fromJson(map);
+        setCandleTicker(candleTicker);
+        _logger.d("Candle ticker === ${_candleTicker?.eventTime}");
         if (_candles[0].date == candleTicker.candle.date &&
             _candles[0].open == candleTicker.candle.open) {
           _candles[0] = candleTicker.candle;

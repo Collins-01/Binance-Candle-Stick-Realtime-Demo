@@ -38,7 +38,7 @@ class _HomeViewState extends ConsumerState<HomeView>
               .read(homeViewModelProvider)
               .getCandles(vm.currentSymbol!, vm.currentInterval)
               .then((value) {
-            if (vm.candleStick == null) {
+            if (vm.candleTicker == null) {
               vm.initializeWebSocket();
             }
           });

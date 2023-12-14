@@ -57,7 +57,7 @@ class PriceChangeSection extends ConsumerWidget {
                   AppText.heading5(
                     vm.currentSymbol == null
                         ? ""
-                        : '\$${double.tryParse(vm.currentSymbol!.price)?.formatValue()}',
+                        : '\$${double.tryParse(vm.currentSymbol!.price).formatValue()}',
                     color: AppColors.green,
                   ),
                 ] else ...[
@@ -111,9 +111,9 @@ class PriceChangeSection extends ConsumerWidget {
                           ],
                         ),
                         const Gap(5),
-                        if (vm.candleStick != null)
+                        if (vm.candleTicker != null)
                           AppText.body1(
-                            '${vm.candleStick?.candle.volume.formatValue2()} +1%',
+                            '${vm.candleTicker?.candle.volume.formatValue2()} +1%',
                             color: AppColors.green,
                           )
                         else
@@ -151,9 +151,9 @@ class PriceChangeSection extends ConsumerWidget {
                           ],
                         ),
                         const Gap(5),
-                        if (vm.candleStick != null)
+                        if (vm.candleTicker != null)
                           AppText.body1(
-                            '${vm.candleStick?.candle.high.formatValue()} +1%',
+                            '${vm.candleTicker?.candle.high.formatValue()} +1%',
                           )
                         else
                           AppText.body1(
@@ -189,9 +189,9 @@ class PriceChangeSection extends ConsumerWidget {
                           ],
                         ),
                         const Gap(5),
-                        if (vm.candleStick != null)
+                        if (vm.candleTicker != null)
                           AppText.body1(
-                            '${vm.candleStick?.candle.low.formatValue()} -1%',
+                            '${vm.candleTicker?.candle.low.formatValue()} -1%',
                           )
                         else
                           AppText.body1(

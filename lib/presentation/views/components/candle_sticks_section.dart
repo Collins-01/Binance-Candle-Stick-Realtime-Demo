@@ -37,90 +37,90 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
           color: AppColors.blackTint.withOpacity(.1),
           thickness: 1,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 9,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  if (!_isTradingView) {
-                    setState(() {
-                      _isTradingView = true;
-                    });
-                  }
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 3,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: _isTradingView
-                        ? context.isDarkMode
-                            ? const Color(0xff555C63)
-                            : const Color(0xffCFD3D8)
-                        : Colors.transparent,
-                  ),
-                  child: Center(
-                    child: AppText.body1(
-                      'Trading view',
-                      color: context.isDarkMode
-                          ? AppColors.white
-                          : AppColors.blackTint2,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  if (_isTradingView) {
-                    setState(() {
-                      _isTradingView = false;
-                    });
-                  }
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 3,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: !_isTradingView
-                        ? context.isDarkMode
-                            ? const Color(0xff555C63)
-                            : const Color(0xffCFD3D8)
-                        : Colors.transparent,
-                  ),
-                  child: Center(
-                    child: AppText.body1(
-                      'Depth',
-                      color: context.isDarkMode
-                          ? AppColors.white
-                          : AppColors.blackTint2,
-                    ),
-                  ),
-                ),
-              ),
-              const Gap(5),
-              SvgPicture.asset(
-                AppAssets.expand,
-              )
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(
+        //     horizontal: 16,
+        //     vertical: 9,
+        //   ),
+        //   child: Row(
+        //     children: [
+        //       InkWell(
+        //         onTap: () {
+        //           if (!_isTradingView) {
+        //             setState(() {
+        //               _isTradingView = true;
+        //             });
+        //           }
+        //         },
+        //         child: AnimatedContainer(
+        //           duration: const Duration(milliseconds: 400),
+        //           margin: const EdgeInsets.symmetric(
+        //             horizontal: 3,
+        //           ),
+        //           padding: const EdgeInsets.symmetric(
+        //             vertical: 6,
+        //             horizontal: 13,
+        //           ),
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(100),
+        //             color: _isTradingView
+        //                 ? context.isDarkMode
+        //                     ? const Color(0xff555C63)
+        //                     : const Color(0xffCFD3D8)
+        //                 : Colors.transparent,
+        //           ),
+        //           child: Center(
+        //             child: AppText.body1(
+        //               'Trading view',
+        //               color: context.isDarkMode
+        //                   ? AppColors.white
+        //                   : AppColors.blackTint2,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       InkWell(
+        //         onTap: () {
+        //           if (_isTradingView) {
+        //             setState(() {
+        //               _isTradingView = false;
+        //             });
+        //           }
+        //         },
+        //         child: AnimatedContainer(
+        //           duration: const Duration(milliseconds: 400),
+        //           margin: const EdgeInsets.symmetric(
+        //             horizontal: 3,
+        //           ),
+        //           padding: const EdgeInsets.symmetric(
+        //             vertical: 6,
+        //             horizontal: 13,
+        //           ),
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(100),
+        //             color: !_isTradingView
+        //                 ? context.isDarkMode
+        //                     ? const Color(0xff555C63)
+        //                     : const Color(0xffCFD3D8)
+        //                 : Colors.transparent,
+        //           ),
+        //           child: Center(
+        //             child: AppText.body1(
+        //               'Depth',
+        //               color: context.isDarkMode
+        //                   ? AppColors.white
+        //                   : AppColors.blackTint2,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       const Gap(5),
+        //       SvgPicture.asset(
+        //         AppAssets.expand,
+        //       )
+        //     ],
+        //   ),
+        // ),
         Divider(
           color: AppColors.blackTint.withOpacity(.1),
           thickness: 1,
@@ -143,14 +143,14 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
               // displayZoomActions: false,
               actions: [
                 ToolBarAction(
-                  width: 45,
+                  // width: 40,
                   onPressed: () {},
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: SvgPicture.asset(
                       AppAssets.arrow_down,
-                      width: 25,
-                      height: 25,
+                      width: 20,
+                      height: 20,
                     ),
                   ),
                 ),
@@ -159,14 +159,14 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                   onPressed: () {},
                   child: Padding(
                     padding: const EdgeInsets.only(left: 2),
-                    child: AppText.body2(
+                    child: AppText.caption(
                       vm.currentSymbol!.symbol,
                       fontSize: 11,
                       color: AppColors.blackTint2,
                     ),
                   ),
                 ),
-                if (vm.candleStick != null)
+                if (vm.candleTicker != null)
                   ToolBarAction(
                     width: 55,
                     onPressed: () {},
@@ -180,7 +180,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                             color: AppColors.blackTint2,
                           ),
                           AppText.body2(
-                            vm.candleStick?.candle.open.formatValue() ?? "-",
+                            vm.candleTicker?.candle.open.formatValue() ?? "-",
                             fontSize: 11,
                             color: AppColors.green,
                           ),
@@ -188,7 +188,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                       ),
                     ),
                   ),
-                if (vm.candleStick != null)
+                if (vm.candleTicker != null)
                   ToolBarAction(
                     width: 55,
                     onPressed: () {},
@@ -202,7 +202,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                             color: AppColors.blackTint2,
                           ),
                           AppText.body2(
-                            vm.candleStick?.candle.high.formatValue() ?? "-",
+                            vm.candleTicker?.candle.high.formatValue() ?? "-",
                             fontSize: 11,
                             color: AppColors.green,
                           ),
@@ -210,7 +210,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                       ),
                     ),
                   ),
-                if (vm.candleStick != null)
+                if (vm.candleTicker != null)
                   ToolBarAction(
                     width: 55,
                     onPressed: () {},
@@ -224,7 +224,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                             color: AppColors.blackTint2,
                           ),
                           AppText.body2(
-                            vm.candleStick?.candle.low.formatValue() ?? "-",
+                            vm.candleTicker?.candle.low.formatValue() ?? "-",
                             fontSize: 11,
                             color: AppColors.green,
                           ),
@@ -232,7 +232,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                       ),
                     ),
                   ),
-                if (vm.candleStick != null)
+                if (vm.candleTicker != null)
                   ToolBarAction(
                     width: 55,
                     onPressed: () {},
@@ -246,7 +246,7 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
                             color: AppColors.blackTint2,
                           ),
                           AppText.body2(
-                            vm.candleStick?.candle.close.formatValue() ?? "-",
+                            vm.candleTicker?.candle.close.formatValue() ?? "-",
                             fontSize: 11,
                             color: AppColors.green,
                           ),
