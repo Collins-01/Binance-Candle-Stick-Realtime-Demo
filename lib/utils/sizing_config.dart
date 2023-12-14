@@ -1,3 +1,3 @@
 class SizingConfig {
-  static double defaultPadding = 18;
+  static double defaultPadding = 17;
 }

@@ -8,6 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+final drawerItems = [
+  'Exchange',
+  'Wallets',
+  'Roqqu Hub',
+  'Log out',
+];
+
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
@@ -15,9 +22,14 @@ class HomeView extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends ConsumerState<HomeView> {
+class _HomeViewState extends ConsumerState<HomeView>
+    with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  late final TabController _tabController;
+
   @override
   void initState() {
+    _tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(homeViewModelProvider).getSymbols();
     });
@@ -25,198 +37,244 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final vm = ref.watch(homeViewModelProvider);
     return Scaffold(
-      backgroundColor: AppColors.lightGrey,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                top: 15,
-                bottom: 15,
-                left: SizingConfig.defaultPadding,
-                right: SizingConfig.defaultPadding,
+      resizeToAvoidBottomInset: true,
+      endDrawer: Stack(
+        children: [
+          Positioned(
+            top: 65,
+            right: 10,
+            child: Container(
+              height: 208,
+              width: 214,
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).shadowColor,
+                  width: 1.5,
+                ),
               ),
-              // margin:
-              //     EdgeInsets.symmetric(horizontal: SizingConfig.defaultPadding),
-              width: context.getDeviceWidth,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(AppAssets.company_logo),
-                  Row(
-                    children: [
-                      Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.textColor,
-                        ),
+                  ...drawerItems.map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 13,
                       ),
-                      Gap.w16,
-                      const Icon(Icons.interests_rounded),
-                      Gap.w16,
-                      const Icon(Icons.menu)
-                    ],
-                  )
+                      child: AppText.body1(e),
+                    ),
+                  ),
                 ],
               ),
             ),
-            //TODO: Add expanded to scroll
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Gap.h8,
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizingConfig.defaultPadding,
-                        vertical: 15,
-                      ),
-                      width: context.getDeviceWidth,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
+          ),
+        ],
+      ),
+      key: _scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(63),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).shadowColor,
+                width: 1.5,
+              ),
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            centerTitle: false,
+            automaticallyImplyLeading: false,
+            title: SvgPicture.asset(
+              AppAssets.company_logo,
+              colorFilter: ColorFilter.mode(
+                context.isDarkMode ? AppColors.white : AppColors.black,
+                BlendMode.colorBurn,
+              ),
+            ),
+            actions: [
+              Row(
+                children: [
+                  SvgPicture.asset(AppAssets.avatar),
+                  Gap.w16,
+                  SvgPicture.asset(AppAssets.internet),
+                  Gap.w16,
+                  SvgPicture.asset(AppAssets.menu),
+                ],
+              ),
+              Gap.w14,
+            ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  Gap.h8,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SizingConfig.defaultPadding,
+                      vertical: 15,
+                    ),
+                    width: context.getDeviceWidth,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            AppText.heading5(vm.currentSymbol?.symbol ?? ""),
+                            Gap.w16,
+                            const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 14,
+                            ),
+                            Gap.w16,
+                            AppText.heading5(
+                              "\$${vm.currentSymbol?.price ?? ""}",
+                              color: AppColors.green,
+                            )
+                          ],
+                        ),
+                        Gap.h14,
+                        const SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
                             children: [
-                              AppText.heading5(vm.currentSymbol?.symbol ?? ""),
-                              Gap.w16,
-                              const Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                size: 14,
+                              PriceChangeComponent(
+                                icon: Icons.access_time_rounded,
+                                title: "24h change",
+                                isIncrease: true,
+                                priceChange: "520.80 +1.25%",
                               ),
-                              Gap.w16,
-                              AppText.heading5(
-                                "\$${vm.currentSymbol?.price ?? ""}",
-                                color: AppColors.green,
+                              PriceChangeComponent(
+                                icon: Icons.arrow_upward_rounded,
+                                title: "24h high",
+                                priceChange: "520.80 +1.25%",
+                              ),
+                              PriceChangeComponent(
+                                icon: Icons.arrow_downward_rounded,
+                                title: "24h low",
+                                priceChange: "520.80 +1.25%",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Gap.h8,
+
+                  // * Home Tab Section
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      border: Border.all(
+                        color: Theme.of(context).shadowColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 42,
+                          margin: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).shadowColor,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Theme.of(context).shadowColor,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: TabBar(
+                            controller: _tabController,
+                            padding: const EdgeInsets.all(2),
+                            labelStyle: const TextStyle(
+                              fontFamily: 'Satoshi',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                            tabs: [
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: AppText.body1('Charts'),
+                              ),
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: AppText.body1('Orderbook'),
+                              ),
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: AppText.body1('Recent trades'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 550,
+                          child: TabBarView(
+                            controller: _tabController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              const CandleSticksSections(),
+                              const OrderBookSection(),
+                              Container(
+                                height: 30,
+                                padding: const EdgeInsets.all(20),
+                                child: AppText.heading5(
+                                  'Recent Trades',
+                                ),
                               )
                             ],
                           ),
-                          Gap.h14,
-                          const SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                PriceChangeComponent(
-                                  icon: Icons.alarm_rounded,
-                                  title: "Change",
-                                  isIncrease: true,
-                                  priceChange: "520.80 +1.25%",
-                                ),
-                                PriceChangeComponent(
-                                  icon: Icons.arrow_downward,
-                                  title: "Change",
-                                  priceChange: "520.80 +1.25%",
-                                ),
-                                PriceChangeComponent(
-                                  icon: Icons.arrow_downward,
-                                  title: "Change",
-                                  priceChange: "520.80 +1.25%",
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                    Gap.h8,
+                  ),
 
-                    TabIndicator(
-                      currentIndex: vm.currentTabIndex,
-                      options: const ["Charts", "Orderbook", "Recent trades"],
-                      onTap: (index) {
-                        vm.setTabIndex(index);
-                      },
-                    ),
-                    //
-                    Gap.h8,
-                    if (vm.currentTabIndex == 0) const CandleSticksSections(),
-                    if (vm.currentTabIndex == 1) const OrderBookSection(),
-                    if (vm.currentTabIndex == 2) const SizedBox.shrink(),
-
-                    Gap.h30,
-                    Container(
-                      width: context.getDeviceWidth,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Gap.h20,
-                          TabIndicator(
-                            currentIndex: vm.bottomTabIndex,
-                            options: const [
-                              "Open Orders",
-                              "Positions",
-                              "Order History"
-                            ],
-                            onTap: (index) {
-                              vm.setBottomTabIndex(index);
-                            },
-                          ),
-                          Gap.h30,
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                AppText.heading5("No Open Orders"),
-                                Gap.h10,
-                                AppText.body2(
-                                  "Lorem ipsum dolor sit amet, consectetur.",
-                                ),
-                                AppText.body2(
-                                    "adipiscing elit. Id pulvinar nullam sit imperdiet"),
-                                AppText.body2("pulvinar")
-                              ],
-                            ),
-                          )
-                        ],
+                  Gap.h30,
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      border: Border.all(
+                        color: Theme.of(context).shadowColor,
+                        width: 1.5,
                       ),
                     ),
-                    const Gap.h(62),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizingConfig.defaultPadding,
-                        vertical: 10,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TradeButton(
-                            type: TradeType.Buy,
-                            onPressed: () {},
-                          ),
-                          TradeButton(
-                            type: TradeType.Sell,
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                    ),
-                    const Gap.h(62),
-                    //Bottom.
-                  ],
-                ),
+                    child: const TradesSection(),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+      bottomSheet: const BottomSheetSection(),
     );
   }
 }
