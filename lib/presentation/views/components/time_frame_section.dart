@@ -46,7 +46,7 @@ class _TimeFrameSectionState extends State<TimeFrameSection> {
               color:
                   context.isDarkMode ? AppColors.white : AppColors.blackTint2,
             ),
-            const Gap(5),
+            Gap.w4,
             ...timeframes.map(
               (e) => InkWell(
                 onTap: () {
@@ -102,30 +102,30 @@ class _TimeFrameSectionState extends State<TimeFrameSection> {
                   const Gap(5),
                   SvgPicture.asset(
                     AppAssets.charts,
-                    colorFilter: ColorFilter.mode(
-                      context.isDarkMode
-                          ? AppColors.white
-                          : AppColors.blackTint2,
-                      BlendMode.colorBurn,
-                    ),
+                    // colorFilter: ColorFilter.mode(
+                    //   context.isDarkMode
+                    //       ? AppColors.white
+                    //       : AppColors.blackTint2,
+                    //   BlendMode.colorBurn,
+                    // ),
                   )
                 ],
               ),
             ),
-            const Gap(6),
+            Gap.w6,
             Container(
               width: 1,
               height: 25,
               color: AppColors.divider.withOpacity(.08),
             ),
-            const Gap(6),
+            Gap.w6,
             AppText.body1(
               'Fx Indicators',
               color: context.isDarkMode
                   ? AppColors.blackTint
                   : AppColors.blackTint2,
             ),
-            const Gap(6),
+            Gap.w6,
           ],
         ),
       ),

@@ -21,14 +21,6 @@ class _CandleSticksSectionState extends ConsumerState<CandleSticksSection> {
   bool _isTradingView = true;
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // _onModelReady();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final vm = ref.watch(homeViewModelProvider);
 
