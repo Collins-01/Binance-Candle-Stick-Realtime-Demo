@@ -107,15 +107,13 @@ class _HomeViewState extends ConsumerState<HomeView>
             ),
           ),
           child: AppBar(
-            backgroundColor: Colors.transparent,
+            // backgroundColor: Colors.transparent,
             centerTitle: false,
             automaticallyImplyLeading: false,
             title: SvgPicture.asset(
               AppAssets.company_logo,
-              colorFilter: ColorFilter.mode(
-                context.isDarkMode ? AppColors.white : AppColors.black,
-                BlendMode.colorBurn,
-              ),
+              // ignore: deprecated_member_use
+              color: context.isDarkMode ? Colors.white : null,
             ),
             actions: [
               Row(
