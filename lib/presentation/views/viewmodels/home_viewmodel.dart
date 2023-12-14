@@ -37,8 +37,8 @@ class HomeViewModel extends BaseViewModel {
   OrderBook? _orderBooks;
   OrderBook? get orderBooks => _orderBooks;
 
-  // StreamController _streamController = StreamController();
-  // Stream get websocketStream => _streamController.stream.asBroadcastStream();
+  StreamController _streamController = StreamController();
+  Stream get websocketStream => _streamController.stream.asBroadcastStream();
   // ***************************************[SETTERS]**********************************************
   setBottomTabIndex(int value) {
     _bottomTabIndex = value;
@@ -126,29 +126,29 @@ class HomeViewModel extends BaseViewModel {
     );
     channel.stream.listen((event) {
       _logger.d("Stream Data ===>> $event");
-      // _streamController.sink.add(event);
+      _streamController.sink.add(event);
     });
 
-    await for (final String value in channel.stream) {
-      final map = jsonDecode(value) as Map<String, dynamic>;
-      final eventType = map['e'];
+    // await for (final String value in channel.stream) {
+    //   final map = jsonDecode(value) as Map<String, dynamic>;
+    //   final eventType = map['e'];
 
-      if (eventType == 'kline') {
-        final candleTicker = CandleTickerModel.fromJson(map);
-        if (_candles[0].date == candleTicker.candle.date &&
-            _candles[0].open == candleTicker.candle.open) {
-          _candles[0] = candleTicker.candle;
-          notifyListeners();
-        } else if (candleTicker.candle.date.difference(candles[0].date) ==
-            _candles[0].date.difference(candles[1].date)) {
-          _candles.insert(0, candleTicker.candle);
-          notifyListeners();
-        }
-      } else if (eventType == 'depthUpdate') {
-        final orderBookInfo = OrderBook.fromMap(map);
-        setOrderBook(orderBookInfo);
-      }
-    }
+    //   if (eventType == 'kline') {
+    //     final candleTicker = CandleTickerModel.fromJson(map);
+    //     if (_candles[0].date == candleTicker.candle.date &&
+    //         _candles[0].open == candleTicker.candle.open) {
+    //       _candles[0] = candleTicker.candle;
+    //       notifyListeners();
+    //     } else if (candleTicker.candle.date.difference(candles[0].date) ==
+    //         _candles[0].date.difference(candles[1].date)) {
+    //       _candles.insert(0, candleTicker.candle);
+    //       notifyListeners();
+    //     }
+    //   } else if (eventType == 'depthUpdate') {
+    //     final orderBookInfo = OrderBook.fromMap(map);
+    //     setOrderBook(orderBookInfo);
+    //   }
+    // }
   }
 
   listenAndUpdateChartStream() {}
@@ -173,7 +173,7 @@ class HomeViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    // _streamController.close();
+    _streamController.close();
     super.dispose();
   }
 }
