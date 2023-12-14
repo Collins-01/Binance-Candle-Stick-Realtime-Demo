@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-TextStyle headingStyle1 = GoogleFonts.poppins(
-  height: 1.3,
+TextStyle headingStyle1 = const TextStyle(
   fontSize: 32,
-  fontWeight: FontWeight.w700,
+  fontFamily: 'Satoshi',
+  fontWeight: FontWeight.w600,
 );
 TextStyle headingStyle2 = GoogleFonts.poppins(
   height: 1.5,

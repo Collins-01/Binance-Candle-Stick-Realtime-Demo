@@ -79,4 +79,9 @@ extension ContextExtension on BuildContext {
     // calculate the width percentage
     return width * (percentage / 100);
   }
+
+  bool get isDarkMode {
+    final brightness = Theme.of(this).brightness;
+    return brightness == Brightness.dark;
+  }
 }

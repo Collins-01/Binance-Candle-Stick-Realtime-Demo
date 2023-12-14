@@ -13,20 +13,32 @@ class BinanceServiceImpl implements BinanceService {
   BinanceServiceImpl(this._networkClient);
   final _logger = appLogger(BinanceServiceImpl);
   @override
-  Future<WebSocketChannel> establishSocketConnection(
-      {required String symbol, required String interval}) async {
+  WebSocketChannel establishSocketConnection(
+      {required String symbol, required String interval}) {
     final channel = WebSocketChannel.connect(
       Uri.parse('wss://stream.binance.com:9443/ws'),
     );
+
     channel.sink.add(
-      json.encode(
+      jsonEncode(
         {
-          "method": "SUBSCRIBE",
-          "params": ["$symbol@kline_$interval"],
-          "id": 1
+          'method': 'SUBSCRIBE',
+          'params': ['$symbol@kline_$interval'],
+          'id': 1
         },
       ),
     );
+
+    channel.sink.add(
+      jsonEncode(
+        {
+          'method': 'SUBSCRIBE',
+          'params': ['$symbol@depth'],
+          'id': 1
+        },
+      ),
+    );
+
     return channel;
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Gap extends StatelessWidget {
-  const Gap({super.key, this.height = 10, this.width = 10});
+  const Gap(int i, {super.key, this.height = 10, this.width = 10});
 
   ///assign [gap] to [height] and [width]
   const Gap.both(double gap, {super.key})
