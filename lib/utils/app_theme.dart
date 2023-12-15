@@ -46,11 +46,11 @@ class AppTheme {
       iconTheme: IconThemeData(
         color: AppColors.white,
       ),
-      cardColor: AppColors.black,
+      cardColor: AppColors.primaryBlack,
       shadowColor: AppColors.cardStroke,
       scaffoldBackgroundColor: AppColors.rockBlack,
-      appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.black,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primaryBlack,
         elevation: 0,
       ),
       tabBarTheme: TabBarTheme(
