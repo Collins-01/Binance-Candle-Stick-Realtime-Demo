@@ -90,7 +90,9 @@ class HomeViewModel extends BaseViewModel {
       changeState(ViewModelState.error(e));
       _logger.e(e.message);
     } catch (e) {
-      final err = AppError("unknown error", e.toString());
+      _logger.e(e.toString());
+      final err =
+          AppError("unknown error", "an error occurred, please try again.");
       changeState(ViewModelState.error(err));
     }
   }
@@ -110,7 +112,9 @@ class HomeViewModel extends BaseViewModel {
       changeState(ViewModelState.error(e));
       _logger.e(e.message);
     } catch (e) {
-      final err = AppError("unknown error", e.toString());
+      _logger.e(e.toString());
+      final err =
+          AppError("unknown error", "an error occurred, please try again.");
       changeState(ViewModelState.error(err));
     }
   }
