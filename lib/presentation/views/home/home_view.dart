@@ -156,7 +156,16 @@ class _HomeViewState extends ConsumerState<HomeView>
                   Gap.w16,
                   SvgPicture.asset(AppAssets.internet),
                   Gap.w16,
-                  SvgPicture.asset(AppAssets.menu),
+                  InkWell(
+                    onTap: () {
+                      if (_scaffoldKey.currentState!.isEndDrawerOpen) {
+                        _scaffoldKey.currentState?.closeEndDrawer();
+                      } else {
+                        _scaffoldKey.currentState?.openEndDrawer();
+                      }
+                    },
+                    child: SvgPicture.asset(AppAssets.menu),
+                  )
                 ],
               ),
               Gap.w14,
