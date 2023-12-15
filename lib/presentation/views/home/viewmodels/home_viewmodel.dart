@@ -37,8 +37,6 @@ class HomeViewModel extends BaseViewModel {
   OrderBook? _orderBooks;
   OrderBook? get orderBooks => _orderBooks;
 
-  StreamController _streamController = StreamController();
-  Stream get websocketStream => _streamController.stream.asBroadcastStream();
   // ***************************************[SETTERS]**********************************************
   setBottomTabIndex(int value) {
     _bottomTabIndex = value;
@@ -75,6 +73,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+// ************************************[METHODS]*************************************
   Future<void> getSymbols() async {
     _logger.d("Getting Symbols.....");
     try {
@@ -132,12 +131,10 @@ class HomeViewModel extends BaseViewModel {
       // _logger.d("Incoming Data from websocket === $value");
       final map = jsonDecode(value) as Map<String, dynamic>;
       final eventType = map['e'];
-
       // * CHECK IF IT IS KLINE
       if (eventType == 'kline') {
         final candleTicker = CandleTickerModel.fromJson(map);
         setCandleTicker(candleTicker);
-        _logger.d("Candle ticker === ${_candleTicker?.eventTime}");
         if (_candles[0].date == candleTicker.candle.date &&
             _candles[0].open == candleTicker.candle.open) {
           _candles[0] = candleTicker.candle;
@@ -170,12 +167,6 @@ class HomeViewModel extends BaseViewModel {
     } catch (e) {
       _logger.d("Error fetching more candles ::: ${e.toString()}");
     }
-  }
-
-  @override
-  void dispose() {
-    _streamController.close();
-    super.dispose();
   }
 }
 
