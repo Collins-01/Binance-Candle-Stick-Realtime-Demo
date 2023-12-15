@@ -25,6 +25,9 @@ These are the development-specific dependencies:
 - **freezed:** ^2.4.5  ` a code generation package for Dart and Flutter that simplifies the process of creating immutable classes`
 
 
+## GIF
+![Example GIF](screenshots/screen_record.gif)
+
 
 ## Screenshots
 
@@ -37,4 +40,4 @@ These are the development-specific dependencies:
 ![Screenshot 7](screenshots/image07.jpg)
 ![Screenshot 8](screenshots/image08.jpg)
 ![Screenshot 9](screenshots/image09.jpg)
-![Screenshot 10](screenshots/image10.jpg)
+
