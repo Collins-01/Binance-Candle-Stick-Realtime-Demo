@@ -3,6 +3,8 @@ import 'package:binance_demo/extensions/context_extension.dart';
 import 'package:binance_demo/presentation/views/home/components/components.dart';
 import 'package:binance_demo/presentation/views/home/viewmodels/home_viewmodel.dart';
 import 'package:binance_demo/presentation/widgets/widgets.dart';
+import 'package:binance_demo/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -67,7 +69,7 @@ class _HomeViewState extends ConsumerState<HomeView>
             top: 65,
             right: 10,
             child: Container(
-              height: 208,
+              height: context.isDarkMode ? 208 : 256,
               width: 214,
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
@@ -80,6 +82,36 @@ class _HomeViewState extends ConsumerState<HomeView>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Gap.h10,
+                  context.isDarkMode
+                      ? const SizedBox.shrink()
+                      : Container(
+                          height: 45,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            // color: Colors.blue,
+                            border: Border.all(
+                              color: AppColors.blackTint,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: TextField(
+                            style: bodyStyle1,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding:
+                                  const EdgeInsets.only(left: 12, top: 8),
+                              hintText: "Search",
+                              hintStyle: bodyStyle1,
+                              suffixIcon: const Icon(
+                                CupertinoIcons.search,
+                                color: AppColors.blackTint,
+                              ),
+                            ),
+                          ),
+                        ),
                   ...drawerItems.map(
                     (e) => Padding(
                       padding: const EdgeInsets.symmetric(
