@@ -20,7 +20,9 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
   ];
   int selectedValue = 0;
   String selectedOption = 'Limit';
-
+  final _limitPriceController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _typeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -120,20 +122,20 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
             InputField(
               hintText: 'Limit price',
               suffixText: '0.00 USD',
-              controller: TextEditingController(),
+              controller: _limitPriceController,
             ),
             const Gap(16),
             InputField(
               hintText: 'Amount',
               suffixText: '0.00 USD',
-              controller: TextEditingController(),
+              controller: _amountController,
             ),
             const Gap(16),
             InputField(
               isReadOnly: true,
               hintText: 'Type',
               suffixText: 'Good till cancelled',
-              controller: TextEditingController(),
+              controller: _typeController,
             ),
             const Gap(16),
             AppCheckbox(

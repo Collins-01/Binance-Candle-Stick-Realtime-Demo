@@ -3,7 +3,7 @@ import 'package:binance_demo/extensions/context_extension.dart';
 import 'package:binance_demo/presentation/views/home/components/components.dart';
 import 'package:binance_demo/presentation/views/home/viewmodels/home_viewmodel.dart';
 import 'package:binance_demo/presentation/widgets/widgets.dart';
-import 'package:binance_demo/utils/utils.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,7 +59,6 @@ class _HomeViewState extends ConsumerState<HomeView>
 
   @override
   Widget build(BuildContext context) {
-    final vm = ref.watch(homeViewModelProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       endDrawer: Stack(

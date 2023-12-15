@@ -6,26 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // ignore: constant_identifier_names
+class Main {}
 
 void main() async {
-  // final _logger = appLogger(Main as Type);
+  final _logger = appLogger(Main);
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
       runApp(const ProviderScope(child: MyApp()));
     },
-    (error, stackTrace) => print(
+    (error, stackTrace) => _logger.e(
       error.toString(),
-      // stackTrace: stackTrace,
-      // functionName: "main",
+      stackTrace: stackTrace,
+      functionName: "main",
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
