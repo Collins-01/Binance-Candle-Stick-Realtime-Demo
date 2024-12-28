@@ -7,23 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'network_interceptors.dart';
 
 // import 'package:mime/mime.dart';
-String get _baseUrl {
-  return "https://routex-demo.onrender.com";
-  // if (Platform.isAndroid) {
-  //   return 'http://10.0.2.2:3000';
-  // }
-  // if (Platform.isIOS) {
-  //   return 'http://localhost:3000';
-  // }
-  // return 'http://localhost:3000';
-}
 
 Dio _createDio() {
   // String baseUrl =
   //     'http://${Platform.isAndroid ? '10.0.2.2' : 'localhost'}:3000';
   var dio = Dio(
     BaseOptions(
-      baseUrl: _baseUrl,
       receiveTimeout: const Duration(seconds: 35), // 15 seconds
       connectTimeout: const Duration(seconds: 35),
       sendTimeout: const Duration(seconds: 60),

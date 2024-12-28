@@ -129,8 +129,8 @@ class AppText extends StatelessWidget {
   /// fontSize `14`
   /// fontWeight `400`
   AppText.body1(
-    this.text, {
-    Key? key,
+    this.text, {super.key, 
+    // Key? key,
     this.multiText = true,
     this.overflow = TextOverflow.ellipsis,
     this.color,
@@ -151,8 +151,8 @@ class AppText extends StatelessWidget {
   /// fontSize `12`
   /// fontWeight `400`
   AppText.body2(
-    this.text, {
-    Key? key,
+    this.text, {super.key, 
+    // Key? key,
     this.multiText = true,
     this.overflow = TextOverflow.ellipsis,
     this.color,

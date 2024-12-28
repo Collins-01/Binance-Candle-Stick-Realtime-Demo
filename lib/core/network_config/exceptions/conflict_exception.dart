@@ -20,6 +20,7 @@ class ConflictException extends DioException implements Failure {
     return "Error was:\nTitle: $title\nMessage: $message ";
   }
 
+  @override
   String get title {
     if (serverResponse == null) {
       return "Bad Request";

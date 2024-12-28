@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class BinanceServiceImpl implements BinanceService {
+  // inject
   final NetworkClient _networkClient;
   BinanceServiceImpl(this._networkClient);
   final _logger = appLogger(BinanceServiceImpl);

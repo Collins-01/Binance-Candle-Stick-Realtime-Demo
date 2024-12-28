@@ -9,14 +9,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Main {}
 
 void main() async {
-  final _logger = appLogger(Main);
+  final logger = appLogger(Main);
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
       runApp(const ProviderScope(child: MyApp()));
     },
-    (error, stackTrace) => _logger.e(
+    (error, stackTrace) => logger.e(
       error.toString(),
       stackTrace: stackTrace,
       functionName: "main",
